@@ -14,6 +14,8 @@ export default function CheckBox({ text, maxPoints, id }){
   const inputValue = types.find((type)=>type.id === id);
   const inputType = inputValue?.type;
 
+  const parialPointsInputClassName = inputType === 1 ? 'partial-points-input partial-points-input_active' : 'partial-points-input'
+
   const setGlobalPartialPoints = (value) => {
     if(value >= 0 && value <= maxPoints) {
       dispatch(changePartialPoints({id, value}))
@@ -53,7 +55,7 @@ export default function CheckBox({ text, maxPoints, id }){
           <input type="radio" name={id} checked={inputType === inputIndex} onChange={(event)=>changeMarkTypeAction(event, inputIndex)}/>
           <span className="checkmark"/>
           {inputIndex === 1 &&
-          <input type='number' className="partial-points-input" value={partialPoints} step={1} min={1} max={maxPoints - 1} onChange={(event)=>setGlobalPartialPoints(event.target.value)}/>}
+          <input type='number' className={parialPointsInputClassName} value={partialPoints} step={1} min={1} max={maxPoints - 1} onChange={(event)=>setGlobalPartialPoints(event.target.value)}/>}
         </label>
       )}
     </div>

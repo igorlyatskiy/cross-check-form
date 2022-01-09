@@ -623,6 +623,11 @@ label:hover {
   border: 1px solid #2196f3;
   position: relative;
   text-align: center;
+  color: #ccc;
+}
+
+.radio-group .partial-points-input_active {
+  color: #000000;
 }
 
 /* makes input type number arrows be visible always */

@@ -22,7 +22,7 @@ export default function UseResponse(score, comments, wrongCriteria, partialCrite
     }
   })
 
-  response += "\n\nКомментарии к выполненым пунктам:\n\n"
+  response += "\n\nКомментарии к выполненным пунктам:\n\n"
   let commentId = 1;
   correctCriteria.forEach((correct) => {
     const commentForCriteria = comments.find((comment) => comment.id === correct.id)?.value
