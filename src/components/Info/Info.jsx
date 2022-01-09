@@ -20,6 +20,7 @@ export default function Info(){
   const blockClassName = isVisible ? 'info visible' : 'info'
 
   const areAllPointsChecked = types.length === filteredCriteria.length
+  const areAllAnswersRight = wrongCriteria.length === 0 && partialCriteria.length === 0
 
   return <div className={blockClassName}>
     {isVisible &&
@@ -34,7 +35,7 @@ export default function Info(){
         </div>
         <p>Отзыв по пункам ТЗ: </p>
 
-        {  wrongCriteria.length && <p><strong>Не выполненные/не засчитанные пункты: </strong></p>  }
+        { !!wrongCriteria.length && <p><strong>Не выполненные/не засчитанные пункты: </strong></p>  }
         {
           wrongCriteria.map((wrong, index)=><React.Fragment key={wrong.id}>
               <p>{index+1}&#41; {wrong.text}</p>
@@ -45,7 +46,7 @@ export default function Info(){
           )
         }
 
-        {partialCriteria.length && <p><strong>Частично выполненные пункты: </strong></p>}
+        { !!partialCriteria.length && <p><strong>Частично выполненные пункты: </strong></p>}
         {
           partialCriteria.map((partial, index)=><React.Fragment key={partial.id}>
           <p>{index+1}&#41; {partial.text} —&nbsp;
@@ -59,7 +60,8 @@ export default function Info(){
           </React.Fragment>)
         }
 
-        { correctCriteria.length && <p><strong>Все оставшиеся пункты выполнены</strong></p> }
+        { areAllAnswersRight && <p><strong>Все пункты выполнены полностью!</strong></p> }
+        { !areAllAnswersRight && !!correctCriteria.length && <p><strong>Все оставшиеся пункты выполнены</strong></p> }
 
         <div className="copy">
           <span onClick={()=>navigator.clipboard.writeText(response)}>Скопировать в буфер</span>
