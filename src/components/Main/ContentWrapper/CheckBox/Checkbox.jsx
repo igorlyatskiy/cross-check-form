@@ -6,7 +6,7 @@ import { changePartialPoints, changeMarkType, changeComments } from '../../../..
 
 export default function CheckBox({ text, maxPoints, id }){
   const phrases = ['Не выполнено', 'Выполнено частично', 'Выполнено полностью']
-  const [partialPoints, setPartialPoints] = useState((maxPoints/2).toFixed(0));
+  const [partialPoints, setPartialPoints] = useState(maxPoints/2);
   const dispatch = useDispatch();
   const { types, comments } = useSelector(state => state.mainReducer);
   const [isCommentInputVisible, setCommentInputVisibility] = useState(false);
@@ -15,8 +15,14 @@ export default function CheckBox({ text, maxPoints, id }){
   const inputType = inputValue?.type;
 
   const setGlobalPartialPoints = (value) => {
-    dispatch(changePartialPoints({id, value}))
-    setPartialPoints(value);
+    if(value >= 0 && value <= maxPoints) {
+      dispatch(changePartialPoints({id, value}))
+      setPartialPoints(value);
+    } else {
+      const newValue = maxPoints/2;
+      dispatch(changePartialPoints({id, newValue}))
+      setPartialPoints(newValue);
+    }
   }
 
   const changeMarkTypeAction = (event, inputIndex) => {
@@ -47,7 +53,7 @@ export default function CheckBox({ text, maxPoints, id }){
           <input type="radio" name={id} checked={inputType === inputIndex} onChange={(event)=>changeMarkTypeAction(event, inputIndex)}/>
           <span className="checkmark"/>
           {inputIndex === 1 &&
-          <input type='number' className="partial-points-input" value={partialPoints} min={1} max={maxPoints - 1} onChange={(event)=>setGlobalPartialPoints(event.target.value)}/>}
+          <input type='number' className="partial-points-input" value={partialPoints} step={1} min={1} max={maxPoints - 1} onChange={(event)=>setGlobalPartialPoints(event.target.value)}/>}
         </label>
       )}
     </div>

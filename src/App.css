@@ -629,22 +629,16 @@ label:hover {
 
 .radio-group .partial-points-input {
   opacity: 1;
-  width: 35px;
+  width: 48px;
   height: 20px;
   border: 1px solid #2196f3;
   position: relative;
   text-align: center;
 }
 
-/* removes arrows from input type number */
+/* makes input type number arrows be visible always */
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
 }
