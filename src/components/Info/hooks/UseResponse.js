@@ -21,15 +21,20 @@ export default function UseResponse(score, comments, wrongCriteria, partialCrite
       response += `Комментарий проверяющего: ${commentForCriteria}\n`
     }
   })
-  response += "\nВыполненные пункты:\n"
-  correctCriteria.forEach((correct, index) => {
-    response += `${index + 1}) ${correct.text}\n`
 
+  response += "\n\nКомментарии к выполненым пунктам:\n\n"
+  let commentId = 1;
+  correctCriteria.forEach((correct) => {
     const commentForCriteria = comments.find((comment) => comment.id === correct.id)?.value
     if (commentForCriteria) {
+      response += `${commentId}) ${correct.text}\n`
+
       response += `Комментарий проверяющего: ${commentForCriteria}\n`
+      commentId++;
     }
   })
+
+  response += "\n\nВсе оставшиеся пункты выполнены и не имеют комментариев проверяющего.\n"
 
   return response
 }

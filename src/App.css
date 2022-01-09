@@ -134,9 +134,6 @@ label {
   text-align: center;
 }
 
-label span {
-}
-
 .checkbox-container {
   transition: all 0.3s ease-in;
   -webkit-transition: all 0.3s ease-in;
@@ -473,14 +470,6 @@ main {
 
 .add-feedback .checkbox-container label:hover .add-feedback {
   display: inline-block !important;
-}
-
-form.add-form {
-  /* position: absolute;
-    width: 100%;
-    left: 0;
-    bottom: -100%;
-    z-index: 100; */
 }
 
 .add-form textarea {
