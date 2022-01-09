@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { changePartialPoints, changeMarkType } from '../../../../redux/main/actions'
+import { changePartialPoints, changeMarkType, changeComments } from '../../../../redux/main/actions'
 
 export default function CheckBox({ text, maxPoints, id }){
   const phrases = ['Не выполнено', 'Выполнено частично', 'Выполнено полностью']
   const [partialPoints, setPartialPoints] = useState((maxPoints/2).toFixed(0));
   const dispatch = useDispatch();
-  const { types } = useSelector(state => state.mainReducer);
+  const { types, comments } = useSelector(state => state.mainReducer);
+  const [isCommentInputVisible, setCommentInputVisibility] = useState(false);
 
   const inputValue = types.find((type)=>type.id === id);
   const inputType = inputValue?.type;
@@ -31,11 +32,17 @@ export default function CheckBox({ text, maxPoints, id }){
     </div>
     <div className="task-description">
       <p className="task-title">{text}</p>
-      <a href="#" className="add-feedback">Добавить отзыв</a>
+      <button className="add-feedback" onClick={(e)=>{e.preventDefault(); setCommentInputVisibility(!isCommentInputVisible)}}>{!isCommentInputVisible? 'Добавить отзыв': 'Скрыть отзыв'}</button>
+      { isCommentInputVisible &&
+        <div className="add-form">
+          <textarea placeholder="Write your feedback here, it will be saved automatically."
+            value={comments.find((comment)=>comment.id === id)?.value || ''}
+            onInput={(event)=>dispatch(changeComments({id, value: event.target.value}))}/>
+        </div> }
     </div>
     <div className="radio-group">
       {phrases.map((phrase, inputIndex)=>
-        <label>
+        <label key={phrase}>
           {phrase}
           <input type="radio" name={id} checked={inputType === inputIndex} onChange={(event)=>changeMarkTypeAction(event, inputIndex)}/>
           <span className="checkmark"/>

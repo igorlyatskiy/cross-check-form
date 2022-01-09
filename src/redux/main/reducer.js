@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { changeMarkType, changePartialPoints, clearMarkType, toggleInfo } from "./actions";
-import { crossCheckCriteria, taskName } from '../../components/Constants'
+import { changeComments, changeMarkType, changePartialPoints, clearMarkType, toggleInfo } from "./actions";
+import { crossCheckCriteria, taskName } from '../../Constants'
 
 const criteriaWithIds = crossCheckCriteria.map((item, index) => ({
   ...item,
@@ -15,7 +15,8 @@ const defaultState = {
   partialPoints: [],
   feedback: {
     isFeedbackVisible: false
-  }
+  },
+  comments: []
 }
 
 const mainReducer = createReducer(defaultState, {
@@ -42,6 +43,15 @@ const mainReducer = createReducer(defaultState, {
   },
   [toggleInfo]: (state) => {
     state.feedback.isFeedbackVisible = !state.feedback.isFeedbackVisible
+  },
+  [changeComments]: (state, { payload }) => {
+    if (state.comments.find((item) => item.id === payload.id)) {
+      state.comments = [...state.comments.filter((item) => item.id !== payload.id), { id: payload.id, value: payload.value }]
+    } else {
+      state.comments.push({
+        id: payload.id, value: payload.value
+      })
+    }
   }
 })
 
