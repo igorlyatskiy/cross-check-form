@@ -39,7 +39,10 @@ const mainReducer = createReducer(defaultState, {
     }
   },
   [clearMarkType]: (state) => {
-    state.types = []
+    state.types = [];
+    state.partialPoints = [];
+    state.comments = [];
+
   },
   [toggleInfo]: (state) => {
     state.feedback.isFeedbackVisible = !state.feedback.isFeedbackVisible
