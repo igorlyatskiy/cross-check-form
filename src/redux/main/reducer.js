@@ -40,7 +40,6 @@ const mainReducer = createReducer(defaultState, {
   },
   [clearMarkType]: (state) => {
     state.types = [];
-    state.partialPoints = [];
     state.comments = [];
 
   },
